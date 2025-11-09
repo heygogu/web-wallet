@@ -5,6 +5,7 @@ First, install dependencies using :
 ```bash
 pnpm install
 ```
+And then run the following command in your terminal :
 
 ```bash
 pnpm run dev
