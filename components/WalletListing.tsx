@@ -1,36 +1,68 @@
-import React from 'react'
-import { Button } from './ui/button'
+import React from "react";
+import { Button } from "./ui/button";
+import { useBlockContext, Wallet } from "@/providers/Context";
+import WalletCard from "./WalletCard";
 
-interface WalletListingProps{
-    addToWallet:(blockType:string) => void
+interface WalletListingProps {
+  blockType: string;
 }
-const WalletListing = (props:WalletListingProps) => {
+const WalletListing = (props: WalletListingProps) => {
+  const {solanaWallets,ethWallets,createSolanaWallet,createEthWallet,deleteAllWallets}= useBlockContext()
+
+  const handleAddWallet = () => {
+    if (props.blockType === "solana") {
+      createSolanaWallet();
+    } else if (props.blockType === "ethereum") {
+      createEthWallet();
+    }
+  }
+
+  const handleDeleteAllWallets = () => {
+    deleteAllWallets(props.blockType)
+  }
   return (
-    <div className="mt-20 space-y-2">
-      <h1 className="font-bold tracking-tight text-5xl">
-        krollo supports multiple blockchains
-      </h1>
-      <h3 className="font-semibold tracking-tight text-xl dark:text-neutral-200 text-neutral-500">
-        Choose a blockchain to get started
-      </h3>
-      <div className="flex gap-2">
-        <Button
-          onClick={() => props.addToWallet("solana")}
-          className="px-6 py-5 cursor-pointer"
-          size={"lg"}
-        >
-          Solana
-        </Button>
-        <Button
-          onClick={() => props.addToWallet("etherium")}
-          className="px-6 py-5 cursor-pointer"
-          size={"lg"}
-        >
-          Etherium
-        </Button>
-      </div>
-    </div>
-  )
-}
+    <div className="mt-20 space-y-5">
+      <div className="flex justify-between">
+        <h1 className="font-bold tracking-tight text-4xl">
+          <span className="capitalize">{props?.blockType} Wallet</span>
+        </h1>
 
-export default WalletListing
+        <div className="flex gap-2">
+          <Button
+            onClick={() => handleAddWallet()}
+            className="px-6 py-5 cursor-pointer"
+            size={"lg"}
+          >
+            Add Wallet
+          </Button>
+          <Button
+            variant={"destructive"}
+            onClick={() => handleDeleteAllWallets()}
+            className="px-6 py-5 cursor-pointer"
+            size={"lg"}
+          >
+            Clear Wallets
+          </Button>
+        </div>
+      </div>
+
+      {
+        props.blockType === "solana" ? (
+          <div className="space-y-5">
+            {solanaWallets.map((wallet: Wallet, index: number) => (
+              <WalletCard key={index} index={index} publicKey={wallet.publicKey} privateKey={wallet.privateKey} blockType="solana" />
+            ))}
+          </div>
+        ):(
+          <div className="space-y-5">
+            {ethWallets.map((wallet: Wallet, index: number) => (
+              <WalletCard key={index} index={index} publicKey={wallet.publicKey} privateKey={wallet.privateKey} blockType="ethereum" />
+            ))}
+          </div>
+        )
+      }
+    </div>
+  );
+};
+
+export default WalletListing;

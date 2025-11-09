@@ -10,7 +10,7 @@ interface Props {
 const SafeRecoveryPhrases = (props: Props) => {
   const {
    handleSolanaOps,
-   handleEtheriumOps
+   handleEthereumOps
   } = useBlockContext();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -33,8 +33,8 @@ const SafeRecoveryPhrases = (props: Props) => {
         case "solana":
            handleSolanaOps()
           break;
-        case "etherium":
-          handleEtheriumOps()
+        case "ethereum":
+          handleEthereumOps()
           break;
       }
     }
@@ -59,7 +59,7 @@ const SafeRecoveryPhrases = (props: Props) => {
           onClick={handleGenerateWallet}
           className="px-6 py-5 cursor-pointer"
         >
-          Generate <span className="capitalize">{props.blockType}</span> Wallet
+          Generate Wallet
         </Button>
       </div>
     </div>

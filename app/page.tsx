@@ -7,6 +7,7 @@ import KrolloSection from "@/components/KrolloSection";
 import SafeRecoveryPhrases from "@/components/SafeRecoveryPhrases";
 import { useBlockContext } from "@/providers/Context";
 import PhraseListing from "@/components/PhraseListing";
+import WalletListing from "@/components/WalletListing";
 export default function Home() {
   const [show, setShow] = useState(true);
   const [activeTab, setActiveTab] = useState("");
@@ -23,7 +24,7 @@ export default function Home() {
       setActiveTab("solana");
       setShow(false);
     } else if (ethWallets.length > 0) {
-      setActiveTab("etherium");
+      setActiveTab("ethereum");
       setShow(false);
     }
   }, [solanaWallets, ethWallets]);
@@ -37,7 +38,7 @@ export default function Home() {
 
         {activeTab && (
           <Tabs defaultValue={activeTab} className="mt-6">
-            <TabsList className="bg-transparent rounded-none border-b p-0 gap-3">
+            <TabsList className="bg-transparent rounded-none  p-0 gap-3">
               <TabsTrigger
                 className="bg-background text-lg data-[state=active]:border-primary dark:data-[state=active]:border-primary h-full rounded-none border-0 border-b-2 border-transparent data-[state=active]:shadow-none"
                 value="solana"
@@ -46,9 +47,9 @@ export default function Home() {
               </TabsTrigger>
               <TabsTrigger
                 className="bg-background text-lg data-[state=active]:border-primary dark:data-[state=active]:border-primary h-full rounded-none border-0 border-b-2 border-transparent data-[state=active]:shadow-none"
-                value="etherium"
+                value="ethereum"
               >
-                Etherium
+                Ethereum
               </TabsTrigger>
             </TabsList>
             <TabsContent value="solana" className="">
@@ -57,12 +58,15 @@ export default function Home() {
               )}
 
               {solanaPhrase.length > 0 && <PhraseListing blockType="solana" />}
+
+              {solanaWallets.length > 0 && <WalletListing blockType="solana" />}
             </TabsContent>
-            <TabsContent value="etherium">
+            <TabsContent value="ethereum">
               {ethWallets.length === 0 && (
-                <SafeRecoveryPhrases blockType="etherium" />
+                <SafeRecoveryPhrases blockType="ethereum" />
               )}
-              {ethPhrase.length > 0 && <PhraseListing blockType="etherium" />}
+              {ethPhrase.length > 0 && <PhraseListing blockType="ethereum" />}
+              {ethWallets.length > 0 && <WalletListing blockType="ethereum"  />}
             </TabsContent>
           </Tabs>
         )}

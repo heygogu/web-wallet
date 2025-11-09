@@ -19,12 +19,12 @@ const Header = () => {
         <SwordsIcon size={30} /> <h1>krollo</h1>
       </div>
       <div className="flex items-center gap-2">
-        <SunIcon color={theme === "dark" ? "gray" : "black"} size={20} />
-        <Switch
+        <SunIcon color={theme === "dark" ? "gray" : "black"} size={26} />
+        <Switch size={"default"}
           checked={theme === "dark"}
           onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
         />
-        <MoonIcon color={theme === "light" ? "gray" : "white"} size={20} />
+        <MoonIcon color={theme === "light" ? "gray" : "white"} size={26} />
       </div>
     </div>
   );
